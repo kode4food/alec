@@ -1,0 +1,11 @@
+"/Users/tbradford/Library/Application Support/JetBrains/Toolbox/apps/CLion/ch-0/202.6397.106/CLion.app/Contents/bin/cmake/mac/bin/cmake" -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /Users/tbradford/work/alec
+CMake Error at CMakeLists.txt:4 (add_subdirectory):
+  The source directory
+
+    /Users/tbradford/work/alec/src
+
+  does not contain a CMakeLists.txt file.
+
+
+-- Configuring incomplete, errors occurred!
+See also "/Users/tbradford/work/alec/cmake-build-debug/CMakeFiles/CMakeOutput.log".
