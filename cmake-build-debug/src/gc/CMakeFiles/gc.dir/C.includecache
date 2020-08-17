@@ -1,0 +1,14 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/tbradford/work/alec/src/gc/gc.c
+gc.h
+/Users/tbradford/work/alec/src/gc/gc.h
+
+/Users/tbradford/work/alec/src/gc/gc.h
+
