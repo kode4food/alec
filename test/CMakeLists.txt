@@ -1,7 +1,0 @@
-cmake_minimum_required(VERSION 3.17)
-project(test)
-set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(test_ale_source_files test_main.cpp catch.h)
-add_executable(test ${test_ale_source_files})
-target_link_libraries(test gc runtime)
