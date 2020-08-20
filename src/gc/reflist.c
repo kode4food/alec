@@ -6,7 +6,15 @@
 
 #include <stdlib.h>
 
-struct GCRefListScanResult emptyRefListScanResult;
+typedef struct {
+  GCRefList *prev;
+  GCRefList *curr;
+} GCRefListScanResult;
+
+static GCRefListScanResult emptyRefListScanResult = {
+    .prev = NULL,
+    .curr = NULL,
+};
 
 bool gcRefListContains(GCRefList *list, GCRef *ref) {
   for (GCRefList *curr = list; curr; curr = curr->next) {
@@ -17,19 +25,10 @@ bool gcRefListContains(GCRefList *list, GCRef *ref) {
   return false;
 }
 
-GCRefList *gcRefListAdd(GCRefList *list, GCRef *ref) {
-  GCRefList *newList = malloc(sizeof(GCRefList));
-  newList->next = list;
-  newList->ref = ref;
-  return newList;
-}
-
-struct GCRefListScanResult emptyRefListScanResult;
-
-struct GCRefListScanResult gcRefListScan(GCRefList *list, GCRef *ref) {
+GCRefListScanResult gcRefListScan(GCRefList *list, GCRef *ref) {
   for (GCRefList *prev, *curr = list; curr; prev = curr, curr = curr->next) {
     if (curr->ref == ref) {
-      struct GCRefListScanResult result;
+      GCRefListScanResult result;
       result.prev = prev;
       result.curr = curr;
       return result;
@@ -38,8 +37,15 @@ struct GCRefListScanResult gcRefListScan(GCRefList *list, GCRef *ref) {
   return emptyRefListScanResult;
 }
 
+GCRefList *gcRefListAdd(GCRefList *list, GCRef *ref) {
+  GCRefList *newList = malloc(sizeof(GCRefList));
+  newList->next = list;
+  newList->ref = ref;
+  return newList;
+}
+
 GCRefList *gcRefListRemove(GCRefList *list, GCRef *ref) {
-  struct GCRefListScanResult result = gcRefListScan(list, ref);
+  GCRefListScanResult result = gcRefListScan(list, ref);
   if (!result.curr) {
     return list;
   }

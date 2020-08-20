@@ -4,9 +4,10 @@
 
 #include "gc.h"
 
+#include <stdio.h>
 #include <stdlib.h>
 
-#include "data.h"
+#include "object.h"
 #include "reflist.h"
 #include "refspan.h"
 
@@ -22,39 +23,53 @@ GC *InitGC() {
   return gc;
 }
 
-GCRef *gcRefAlloc(GC *gc) {
+GCRef *gcAllocRef(GC *gc) {
+  return NULL;
 }
 
 void gcRefFree(GCRef *ref) {
 }
 
-GCRef *GCMalloc(GC *gc, GCType *type, GCSize_t size) {
-  GCContent_p content = malloc(size);
+void gcCollectGarbage(GC *gc) {
+}
+
+GCBuffer_p gcAllocContent(GC *gc, GCSize_t size) {
+  GCBuffer_p content = malloc(size);
   if (!content) {
-    // Mark and Sweep
+    gcCollectGarbage(gc);
+    content = malloc(size);
+    if (!content) {
+      fprintf(stderr, "out of memory\n");
+      exit(-1);
+    }
   }
-  GCRef *ref = gcRefAlloc(gc);
-  ref->data = (GCData){
+  return content;
+}
+
+GCRef *GCMalloc(GC *gc, GCType *type, GCSize_t size) {
+  GCBuffer_p content = gcAllocContent(gc, size);
+  GCRef *ref = gcAllocRef(gc);
+  ref->object = (GCObject){
       .type = type,
       .size = size,
-      .content = content,
+      .buffer = content,
   };
   return ref;
 }
 
 GCRef *GCPin(GCRef *ref) {
-  GC *gc = ref->gc;
+  GC *gc = RefCollector(ref);
   gc->pinned = gcRefListAdd(gc->pinned, ref);
   return ref;
 }
 
 GCRef *GCUnpin(GCRef *ref) {
-  GC *gc = ref->gc;
+  GC *gc = RefCollector(ref);
   gc->pinned = gcRefListRemove(gc->pinned, ref);
   return ref;
 }
 
 GCRef *GCMark(GCRef *ref) {
-  GC *gc = ref->gc;
+  GC *gc = RefCollector(ref);
   return ref;
 }
