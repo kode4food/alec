@@ -7,9 +7,8 @@
 
 #include "reflist.h"
 #include "refspan.h"
-#include "reftype.h"
 
-typedef struct  {
+typedef struct {
   GCColor_t white;
   GCColor_t black;
   GCRefSpan *refs;
@@ -18,9 +17,9 @@ typedef struct  {
 } GC;
 
 GC *CreateGC();
-GCRef *GCMalloc(GC *gc, GCRefType *type, GCSize_t size);
+GCRef *GCMalloc(GC *gc, GCType *type, GCSize_t size);
 GCRef *GCPin(GCRef *ref);
 GCRef *GCUnpin(GCRef *ref);
 GCRef *GCMark(GCRef *ref);
 
-#endif // ALE_SRC_GC_GC_H_
+#endif// ALE_SRC_GC_GC_H_

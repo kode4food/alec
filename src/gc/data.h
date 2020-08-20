@@ -7,7 +7,19 @@
 
 #include <stdint.h>
 
-typedef uint8_t* GCData_t;
 typedef uint64_t GCSize_t;
+typedef uint8_t* GCContent_p;
+
+typedef void (*GCMarker)(GCContent_p content);
+
+typedef struct {
+  GCMarker marker;
+} GCType;
+
+typedef struct {
+  GCType* type;
+  GCSize_t size;
+  GCContent_p content;
+} GCData;
 
 #endif//ALE_SRC_GC_DATA_H_

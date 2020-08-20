@@ -21,4 +21,4 @@ struct GCRefSpan {
 
 GCRefSpan *gcAllocRefSpan(GCSize_t capacity);
 
-#endif // ALE_SRC_GC_REFSPAN_H_
+#endif// ALE_SRC_GC_REFSPAN_H_

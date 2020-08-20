@@ -2,8 +2,9 @@
 // Created by Thomas Bradford on 19.08.20.
 //
 
-#include <stdlib.h>
 #include "reflist.h"
+
+#include <stdlib.h>
 
 struct GCRefListScanResult emptyRefListScanResult;
 
@@ -26,7 +27,7 @@ GCRefList *gcRefListAdd(GCRefList *list, GCRef *ref) {
 struct GCRefListScanResult emptyRefListScanResult;
 
 struct GCRefListScanResult gcRefListScan(GCRefList *list, GCRef *ref) {
-  for (GCRefList *prev, *curr = list; curr; prev=curr, curr = curr->next) {
+  for (GCRefList *prev, *curr = list; curr; prev = curr, curr = curr->next) {
     if (curr->ref == ref) {
       struct GCRefListScanResult result;
       result.prev = prev;

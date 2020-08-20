@@ -2,39 +2,43 @@
 // Created by Thomas Bradford on 17.08.20.
 //
 
-#include <stdbool.h>
+#include "gc.h"
+
 #include <stdlib.h>
 
-#include "gc.h"
+#include "data.h"
 #include "reflist.h"
 #include "refspan.h"
 
 GC *InitGC() {
   GC *gc = malloc(sizeof(GC));
-  gc->black = GC_Gray - 1;
-  gc->white = GC_Gray + 1;
-  gc->refs = gcAllocRefSpan(defaultSpanSize);
-  gc->pinned = NULL;
-  gc->freed = NULL;
+  *gc = (GC){
+      .black = GC_Gray - 1,
+      .white = GC_Gray + 1,
+      .refs = gcAllocRefSpan(defaultSpanSize),
+      .pinned = NULL,
+      .freed = NULL,
+  };
   return gc;
 }
 
 GCRef *gcRefAlloc(GC *gc) {
-
 }
 
 void gcRefFree(GCRef *ref) {
-
 }
 
-GCRef *GCMalloc(GC *gc, GCRefType *type, GCSize_t size) {
-  GCData_t data = malloc(size);
-  if (!data) {
+GCRef *GCMalloc(GC *gc, GCType *type, GCSize_t size) {
+  GCContent_p content = malloc(size);
+  if (!content) {
     // Mark and Sweep
   }
   GCRef *ref = gcRefAlloc(gc);
-  ref->type = type;
-  ref->data = data;
+  ref->data = (GCData){
+      .type = type,
+      .size = size,
+      .content = content,
+  };
   return ref;
 }
 

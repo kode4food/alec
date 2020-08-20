@@ -6,6 +6,7 @@
 #define ALE_SRC_GC_REFLIST_H_
 
 #include <stdbool.h>
+
 #include "ref.h"
 
 typedef struct GCRefList GCRefList;
@@ -24,4 +25,4 @@ GCRefList *gcRefListAdd(GCRefList *list, GCRef *ref);
 struct GCRefListScanResult gcRefListScan(GCRefList *list, GCRef *ref);
 GCRefList *gcRefListRemove(GCRefList *list, GCRef *ref);
 
-#endif // ALE_SRC_GC_REFLIST_H_
+#endif// ALE_SRC_GC_REFLIST_H_
