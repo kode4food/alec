@@ -5,10 +5,12 @@
 #ifndef ALE_SRC_GC_REFSPAN_H_
 #define ALE_SRC_GC_REFSPAN_H_
 
-#include "types.h"
+#include "data.h"
 #include "ref.h"
 
 const GCSize_t defaultSpanSize = 1024;
+
+typedef struct GCRefSpan GCRefSpan;
 
 struct GCRefSpan {
   GCSize_t count;

@@ -5,12 +5,12 @@
 #ifndef ALE_SRC_GC_TYPE_H_
 #define ALE_SRC_GC_TYPE_H_
 
-#include "types.h"
+#include "data.h"
 
 typedef void (*GCMarker)(GCData_t data);
 
-struct GCRefType {
+typedef struct  {
   GCMarker marker;
-};
+} GCRefType;
 
 #endif // ALE_SRC_GC_REFTYPE_H_

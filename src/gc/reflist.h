@@ -6,17 +6,18 @@
 #define ALE_SRC_GC_REFLIST_H_
 
 #include <stdbool.h>
-#include "types.h"
 #include "ref.h"
+
+typedef struct GCRefList GCRefList;
 
 struct GCRefList {
   GCRef *ref;
   GCRefList *next;
 };
 
-struct GCRefListScanResult {
+typedef struct {
   GCRefList *prev, *curr;
-};
+} GCRefListScanResult;
 
 bool gcRefListContains(GCRefList *list, GCRef *ref);
 GCRefList *gcRefListAdd(GCRefList *list, GCRef *ref);

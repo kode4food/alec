@@ -5,15 +5,17 @@
 #ifndef ALE_SRC_GC_GC_H_
 #define ALE_SRC_GC_GC_H_
 
-#include "types.h"
+#include "reflist.h"
+#include "refspan.h"
+#include "reftype.h"
 
-struct GC {
+typedef struct  {
   GCColor_t white;
   GCColor_t black;
   GCRefSpan *refs;
   GCRefList *pinned;
   GCRefList *freed;
-};
+} GC;
 
 GC *CreateGC();
 GCRef *GCMalloc(GC *gc, GCRefType *type, GCSize_t size);
