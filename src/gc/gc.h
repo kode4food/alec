@@ -5,6 +5,7 @@
 #ifndef ALE_SRC_GC_GC_H_
 #define ALE_SRC_GC_GC_H_
 
+#include "ref.h"
 #include "reflist.h"
 #include "refspan.h"
 

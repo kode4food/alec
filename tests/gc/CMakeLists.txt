@@ -1,0 +1,5 @@
+cmake_minimum_required(VERSION 3.17)
+set(test_gc_source_files test_gc.cpp)
+add_executable(test_gc ${test_gc_source_files})
+target_link_libraries(test_gc gc runtime)
+add_test(gc test_gc)

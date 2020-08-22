@@ -5,7 +5,7 @@
 #ifndef ALE_SRC_GC_REFSPAN_H_
 #define ALE_SRC_GC_REFSPAN_H_
 
-#include "object.h"
+#include "entry.h"
 #include "ref.h"
 
 const GCSize_t defaultSpanSize = 1024;

@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "object.h"
+#include "entry.h"
 #include "reflist.h"
 #include "refspan.h"
 
@@ -23,53 +23,59 @@ GC *InitGC() {
   return gc;
 }
 
-GCRef *gcAllocRef(GC *gc) {
+static GCRef *allocRef(GC *gc) {
+  GCRefList *freed = gc->freed;
+  if (freed) {
+    GCRef *ref = freed->ref;
+    gc->freed = freed->next;
+    return ref;
+  }
   return NULL;
 }
 
-void gcRefFree(GCRef *ref) {
+static void refFree(GCRef *ref) {
 }
 
-void gcCollectGarbage(GC *gc) {
+static void collectGarbage(GC *gc) {
 }
 
-GCBuffer_p gcAllocContent(GC *gc, GCSize_t size) {
-  GCBuffer_p content = malloc(size);
-  if (!content) {
-    gcCollectGarbage(gc);
-    content = malloc(size);
-    if (!content) {
+static void *allocData(GC *gc, GCSize_t size) {
+  void *ptr = malloc(size);
+  if (!ptr) {
+    collectGarbage(gc);
+    ptr = malloc(size);
+    if (!ptr) {
       fprintf(stderr, "out of memory\n");
       exit(-1);
     }
   }
-  return content;
+  return ptr;
 }
 
 GCRef *GCMalloc(GC *gc, GCType *type, GCSize_t size) {
-  GCBuffer_p content = gcAllocContent(gc, size);
-  GCRef *ref = gcAllocRef(gc);
-  ref->object = (GCObject){
+  void *ptr = allocData(gc, size);
+  GCRef *ref = allocRef(gc);
+  ref->entry = (GCEntry){
       .type = type,
       .size = size,
-      .buffer = content,
+      .ptr = ptr,
   };
   return ref;
 }
 
 GCRef *GCPin(GCRef *ref) {
-  GC *gc = RefCollector(ref);
+  GC *gc = RefGC(ref);
   gc->pinned = gcRefListAdd(gc->pinned, ref);
   return ref;
 }
 
 GCRef *GCUnpin(GCRef *ref) {
-  GC *gc = RefCollector(ref);
+  GC *gc = RefGC(ref);
   gc->pinned = gcRefListRemove(gc->pinned, ref);
   return ref;
 }
 
 GCRef *GCMark(GCRef *ref) {
-  GC *gc = RefCollector(ref);
+  GC *gc = RefGC(ref);
   return ref;
 }

@@ -16,16 +16,7 @@ static GCRefListScanResult emptyRefListScanResult = {
     .curr = NULL,
 };
 
-bool gcRefListContains(GCRefList *list, GCRef *ref) {
-  for (GCRefList *curr = list; curr; curr = curr->next) {
-    if (curr->ref == ref) {
-      return true;
-    }
-  }
-  return false;
-}
-
-GCRefListScanResult gcRefListScan(GCRefList *list, GCRef *ref) {
+static GCRefListScanResult refListScan(GCRefList *list, GCRef *ref) {
   for (GCRefList *prev, *curr = list; curr; prev = curr, curr = curr->next) {
     if (curr->ref == ref) {
       GCRefListScanResult result;
@@ -45,7 +36,7 @@ GCRefList *gcRefListAdd(GCRefList *list, GCRef *ref) {
 }
 
 GCRefList *gcRefListRemove(GCRefList *list, GCRef *ref) {
-  GCRefListScanResult result = gcRefListScan(list, ref);
+  GCRefListScanResult result = refListScan(list, ref);
   if (!result.curr) {
     return list;
   }
