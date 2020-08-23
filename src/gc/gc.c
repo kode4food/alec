@@ -12,54 +12,68 @@
 #include "refspan.h"
 
 GC *InitGC() {
-  GC *gc = malloc(sizeof(GC));
-  *gc = (GC){
-      .black = GC_Gray - 1,
-      .white = GC_Gray + 1,
-      .refs = gcAllocRefSpan(defaultSpanSize),
-      .pinned = NULL,
-      .freed = NULL,
-  };
-  return gc;
+  return calloc(1, sizeof(GC));
 }
 
-static GCRef *allocRef(GC *gc) {
+static GCRef *allocRef(GC *gc, GCEntry *entry) {
+  // Anything free available?
   GCRefList *freed = gc->freed;
   if (freed) {
     GCRef *ref = freed->ref;
     gc->freed = freed->next;
+    *ref = (GCRef){
+        .status = GCInitialStatus,
+        .entry = entry,
+    };
     return ref;
   }
-  return NULL;
+
+  // Find a span to allocate from
+  GCRefSpan *span = gc->refs;
+  if (!span || span->count == span->capacity) {
+    gc->refs = span = gcAllocRefSpan(defaultSpanSize, span);
+  }
+
+  // Allocate from the span
+  int idx = span->count++;
+  GCRef *ref = &(span->refs[idx]);
+  *ref = (GCRef){
+      .gc = gc,
+      .status = GCInitialStatus,
+      .entry = entry,
+  };
+  return ref;
 }
 
 static void refFree(GCRef *ref) {
+  GC *gc = RefGC(ref);
+  gc->freed = gcRefListAdd(gc->freed, ref);
 }
 
 static void collectGarbage(GC *gc) {
 }
 
-static void *allocData(GC *gc, GCSize_t size) {
-  void *ptr = malloc(size);
-  if (!ptr) {
+static GCEntry *allocEntry(GC *gc, GCType *type, GCSize_t size) {
+  GCSize_t totalSize = sizeof(GCEntry) + size;
+  GCEntry *entry = calloc(1, totalSize);
+  if (!entry) {
     collectGarbage(gc);
-    ptr = malloc(size);
-    if (!ptr) {
+    entry = calloc(1, totalSize);
+    if (!entry) {
       fprintf(stderr, "out of memory\n");
       exit(-1);
     }
   }
-  return ptr;
+  *entry = (GCEntry){
+      .type = type,
+      .size = size,
+  };
+  return entry;
 }
 
 GCRef *GCMalloc(GC *gc, GCType *type, GCSize_t size) {
-  void *ptr = allocData(gc, size);
-  GCRef *ref = allocRef(gc);
-  ref->entry = (GCEntry){
-      .type = type,
-      .size = size,
-      .ptr = ptr,
-  };
+  GCEntry *entry = allocEntry(gc, type, size);
+  GCRef *ref = allocRef(gc, entry);
   return ref;
 }
 

@@ -30,8 +30,10 @@ static GCRefListScanResult refListScan(GCRefList *list, GCRef *ref) {
 
 GCRefList *gcRefListAdd(GCRefList *list, GCRef *ref) {
   GCRefList *newList = malloc(sizeof(GCRefList));
-  newList->next = list;
-  newList->ref = ref;
+  *newList = (GCRefList){
+      .next = list,
+      .ref = ref,
+  };
   return newList;
 }
 

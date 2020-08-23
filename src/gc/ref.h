@@ -9,17 +9,21 @@
 
 #include "entry.h"
 
-typedef uint8_t GCColor_t;
-
-const GCColor_t GC_Gray = 1;
+typedef enum {
+  GCInitialStatus,
+  GCUnmarkedStatus,
+  GCPendingStatus,
+  GCMarkedStatus,
+  GCCollectedStatus,
+} GCStatus_t;
 
 typedef struct {
   struct GC *gc;
-  GCColor_t color;
-  GCEntry entry;
+  GCStatus_t status;
+  GCEntry *entry;
 } GCRef;
 
 #define RefGC(ref) ((GC *) (ref->gc))
-#define DeRef(ref) (ref->entry.data)
+#define DeRef(ref) (&(ref->entry.data))
 
 #endif// ALE_SRC_GC_REF_H_

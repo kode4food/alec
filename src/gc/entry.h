@@ -8,6 +8,7 @@
 #include <stdint.h>
 
 typedef uint64_t GCSize_t;
+typedef uint8_t GCData_t;
 
 typedef void (*GCMarker)(void* ptr);
 
@@ -18,7 +19,7 @@ typedef struct {
 typedef struct {
   GCType* type;
   GCSize_t size;
-  void* ptr;
+  GCData_t data[];
 } GCEntry;
 
 #endif//ALE_SRC_GC_ENTRY_H_

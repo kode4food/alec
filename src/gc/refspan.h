@@ -19,6 +19,6 @@ struct GCRefSpan {
   GCRef refs[];
 };
 
-GCRefSpan *gcAllocRefSpan(GCSize_t capacity);
+GCRefSpan *gcAllocRefSpan(GCSize_t capacity, GCRefSpan *next);
 
 #endif// ALE_SRC_GC_REFSPAN_H_

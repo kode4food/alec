@@ -10,8 +10,6 @@
 #include "refspan.h"
 
 typedef struct {
-  GCColor_t white;
-  GCColor_t black;
   GCRefSpan *refs;
   GCRefList *pinned;
   GCRefList *freed;
