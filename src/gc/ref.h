@@ -10,20 +10,20 @@
 #include "entry.h"
 
 typedef enum {
-  GCInitialStatus,
-  GCUnmarkedStatus,
-  GCPendingStatus,
-  GCMarkedStatus,
-  GCCollectedStatus,
+  kInitialStatus,
+  kUnmarkedStatus,
+  kPendingStatus,
+  kMarkedStatus,
+  kCollectedStatus,
 } GCStatus_t;
 
 typedef struct {
   struct GC *gc;
   GCStatus_t status;
-  GCEntry *entry;
-} GCRef;
+  Entry *entry;
+} Ref;
 
-#define RefGC(ref) ((GC *) (ref->gc))
-#define DeRef(ref) (&(ref->entry.data))
+#define REF_GC(ref) ((GC *) ((ref)->gc))
+#define DEREF(ref) (&((ref)->entry.data))
 
 #endif// ALE_SRC_GC_REF_H_

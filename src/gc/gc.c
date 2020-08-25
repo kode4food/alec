@@ -11,85 +11,89 @@
 #include "reflist.h"
 #include "refspan.h"
 
-GC *InitGC() {
+GC *GCInit() {
   return calloc(1, sizeof(GC));
 }
 
-static GCRef *allocRef(GC *gc, GCEntry *entry) {
+static Ref *AllocRef(GC *gc, Entry *entry) {
   // Anything free available?
-  GCRefList *freed = gc->freed;
+  RefList *freed = gc->freed;
   if (freed) {
-    GCRef *ref = freed->ref;
+    Ref *ref = freed->ref;
     gc->freed = freed->next;
-    *ref = (GCRef){
-        .status = GCInitialStatus,
+    *ref = (Ref){
+        .status = kInitialStatus,
         .entry = entry,
     };
     return ref;
   }
 
   // Find a span to allocate from
-  GCRefSpan *span = gc->refs;
+  RefSpan *span = gc->refs;
   if (!span || span->count == span->capacity) {
-    gc->refs = span = gcAllocRefSpan(defaultSpanSize, span);
+    gc->refs = span = RefSpanAlloc(kDefaultSpanSize, span);
   }
 
   // Allocate from the span
   int idx = span->count++;
-  GCRef *ref = &(span->refs[idx]);
-  *ref = (GCRef){
-      .gc = gc,
-      .status = GCInitialStatus,
+  Ref *ref = &(span->refs[idx]);
+  *ref = (Ref){
+      .gc = (struct GC *) gc,
+      .status = kInitialStatus,
       .entry = entry,
   };
   return ref;
 }
 
-static void refFree(GCRef *ref) {
-  GC *gc = RefGC(ref);
-  gc->freed = gcRefListAdd(gc->freed, ref);
+static void FreeRef(Ref *ref) {
+  GC *gc = REF_GC(ref);
+  gc->freed = RefListAdd(gc->freed, ref);
 }
 
-static void collectGarbage(GC *gc) {
+static void Collect(GC *gc) {
 }
 
-static GCEntry *allocEntry(GC *gc, GCType *type, GCSize_t size) {
-  GCSize_t totalSize = sizeof(GCEntry) + size;
-  GCEntry *entry = calloc(1, totalSize);
+static Entry *AllocEntry(GC *gc, Type *type, GCSize_t size) {
+  GCSize_t total_size = sizeof(Entry) + size;
+  Entry *entry = calloc(1, total_size);
   if (!entry) {
-    collectGarbage(gc);
-    entry = calloc(1, totalSize);
+    Collect(gc);
+    entry = calloc(1, total_size);
     if (!entry) {
       fprintf(stderr, "out of memory\n");
       exit(-1);
     }
   }
-  *entry = (GCEntry){
+  *entry = (Entry){
       .type = type,
       .size = size,
   };
   return entry;
 }
 
-GCRef *GCMalloc(GC *gc, GCType *type, GCSize_t size) {
-  GCEntry *entry = allocEntry(gc, type, size);
-  GCRef *ref = allocRef(gc, entry);
+Ref *GCNew(GC *gc, Type *type) {
+  return GCNewSized(gc, type, type->default_size);
+}
+
+Ref *GCNewSized(GC *gc, Type *type, GCSize_t size) {
+  Entry *entry = AllocEntry(gc, type, size);
+  Ref *ref = AllocRef(gc, entry);
   return ref;
 }
 
-GCRef *GCPin(GCRef *ref) {
-  GC *gc = RefGC(ref);
-  gc->pinned = gcRefListAdd(gc->pinned, ref);
+Ref *RefPin(Ref *ref) {
+  GC *gc = REF_GC(ref);
+  gc->pinned = RefListAdd(gc->pinned, ref);
   return ref;
 }
 
-GCRef *GCUnpin(GCRef *ref) {
-  GC *gc = RefGC(ref);
-  gc->pinned = gcRefListRemove(gc->pinned, ref);
+Ref *RefUnpin(Ref *ref) {
+  GC *gc = REF_GC(ref);
+  gc->pinned = RefListRemove(gc->pinned, ref);
   return ref;
 }
 
-GCRef *GCMark(GCRef *ref) {
-  GC *gc = RefGC(ref);
+Ref *RefMark(Ref *ref) {
+  GC *gc = REF_GC(ref);
   return ref;
 }

@@ -13,13 +13,14 @@ typedef uint8_t GCData_t;
 typedef void (*GCMarker)(void* ptr);
 
 typedef struct {
+  GCSize_t default_size;
   GCMarker marker;
-} GCType;
+} Type;
 
 typedef struct {
-  GCType* type;
+  Type* type;
   GCSize_t size;
   GCData_t data[];
-} GCEntry;
+} Entry;
 
 #endif//ALE_SRC_GC_ENTRY_H_

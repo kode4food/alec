@@ -8,17 +8,17 @@
 #include "entry.h"
 #include "ref.h"
 
-const GCSize_t defaultSpanSize = 1024;
+const GCSize_t kDefaultSpanSize = 1024;
 
-typedef struct GCRefSpan GCRefSpan;
+typedef struct RefSpan RefSpan;
 
-struct GCRefSpan {
+struct RefSpan {
   GCSize_t count;
   GCSize_t capacity;
-  GCRefSpan *next;
-  GCRef refs[];
+  RefSpan *next;
+  Ref refs[];
 };
 
-GCRefSpan *gcAllocRefSpan(GCSize_t capacity, GCRefSpan *next);
+RefSpan *RefSpanAlloc(GCSize_t capacity, RefSpan *next);
 
 #endif// ALE_SRC_GC_REFSPAN_H_

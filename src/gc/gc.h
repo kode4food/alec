@@ -10,15 +10,16 @@
 #include "refspan.h"
 
 typedef struct {
-  GCRefSpan *refs;
-  GCRefList *pinned;
-  GCRefList *freed;
+  RefSpan *refs;
+  RefList *pinned;
+  RefList *freed;
 } GC;
 
-GC *CreateGC();
-GCRef *GCMalloc(GC *gc, GCType *type, GCSize_t size);
-GCRef *GCPin(GCRef *ref);
-GCRef *GCUnpin(GCRef *ref);
-GCRef *GCMark(GCRef *ref);
+GC *GCInit();
+Ref *GCNew(GC *gc, Type *type);
+Ref *GCNewSized(GC *gc, Type *type, GCSize_t size);
+Ref *RefPin(Ref *ref);
+Ref *RefUnpin(Ref *ref);
+Ref *RefMark(Ref *ref);
 
 #endif// ALE_SRC_GC_GC_H_

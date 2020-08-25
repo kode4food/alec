@@ -10,16 +10,16 @@
 
 #include "ref.h"
 
-typedef struct GCRefList GCRefList;
+typedef struct RefList RefList;
 
-struct GCRefList {
-  GCRef *ref;
-  GCRefList *next;
+struct RefList {
+  Ref *ref;
+  RefList *next;
 };
 
-const GCRefList *EmptyRefList = NULL;
+const RefList *kEmptyRefList = NULL;
 
-GCRefList *gcRefListAdd(GCRefList *list, GCRef *ref);
-GCRefList *gcRefListRemove(GCRefList *list, GCRef *ref);
+RefList *RefListAdd(RefList *list, Ref *ref);
+RefList *RefListRemove(RefList *list, Ref *ref);
 
 #endif// ALE_SRC_GC_REFLIST_H_

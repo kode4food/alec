@@ -6,10 +6,10 @@
 
 #include <stdlib.h>
 
-GCRefSpan *gcAllocRefSpan(GCSize_t capacity, GCRefSpan *next) {
-  GCSize_t totalSize = sizeof(GCRefSpan) + (capacity * sizeof(GCRef));
-  GCRefSpan *span = malloc(totalSize);
-  *span = (GCRefSpan){
+RefSpan *RefSpanAlloc(GCSize_t capacity, RefSpan *next) {
+  GCSize_t total_size = sizeof(RefSpan) + (capacity * sizeof(Ref));
+  RefSpan *span = malloc(total_size);
+  *span = (RefSpan){
       .count = 0,
       .capacity = capacity,
       .next = next,
