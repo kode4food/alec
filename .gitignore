@@ -52,7 +52,7 @@ Mkfile.old
 dkms.conf
 
 # CMake Stuff
-cmake-build-debug
+build
 
 *~
 .idea
