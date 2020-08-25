@@ -5,22 +5,15 @@
 #ifndef ALE_SRC_GC_ENTRY_H_
 #define ALE_SRC_GC_ENTRY_H_
 
-#include <stdint.h>
+#include "type.h"
+#include "typedefs.h"
 
-typedef uint64_t GCSize_t;
-typedef uint8_t GCData_t;
+typedef struct Entry Entry;
 
-typedef void (*GCMarker)(void* ptr);
-
-typedef struct {
-  GCSize_t default_size;
-  GCMarker marker;
-} Type;
-
-typedef struct {
+struct Entry {
   Type* type;
-  GCSize_t size;
+  Size_t size;
   GCData_t data[];
-} Entry;
+};
 
 #endif//ALE_SRC_GC_ENTRY_H_

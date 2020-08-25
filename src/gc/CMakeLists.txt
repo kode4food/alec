@@ -1,7 +1,4 @@
 set(gc_source_files
-        entry.h
-        gc.c gc.h
-        ref.c ref.h
-        reflist.c reflist.h
-        refspan.c refspan.h)
+        entry.c entry.h gc.c gc.h ref.c ref.h reflist.c reflist.h
+        refspan.c refspan.h type.c type.h typedefs.h)
 add_library(gc ${gc_source_files})

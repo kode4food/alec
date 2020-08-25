@@ -5,9 +5,6 @@
 #ifndef ALE_SRC_GC_REFLIST_H_
 #define ALE_SRC_GC_REFLIST_H_
 
-#include <stdbool.h>
-#include <stdlib.h>
-
 #include "ref.h"
 
 typedef struct RefList RefList;

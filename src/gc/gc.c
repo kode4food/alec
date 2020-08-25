@@ -7,10 +7,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "entry.h"
-#include "reflist.h"
-#include "refspan.h"
-
 GC *GCInit() {
   return calloc(1, sizeof(GC));
 }
@@ -53,8 +49,8 @@ static void FreeRef(Ref *ref) {
 static void Collect(GC *gc) {
 }
 
-static Entry *AllocEntry(GC *gc, Type *type, GCSize_t size) {
-  GCSize_t total_size = sizeof(Entry) + size;
+static Entry *AllocEntry(GC *gc, Type *type, Size_t size) {
+  Size_t total_size = sizeof(Entry) + size;
   Entry *entry = calloc(1, total_size);
   if (!entry) {
     Collect(gc);
@@ -75,25 +71,8 @@ Ref *GCNew(GC *gc, Type *type) {
   return GCNewSized(gc, type, type->default_size);
 }
 
-Ref *GCNewSized(GC *gc, Type *type, GCSize_t size) {
+Ref *GCNewSized(GC *gc, Type *type, Size_t size) {
   Entry *entry = AllocEntry(gc, type, size);
   Ref *ref = AllocRef(gc, entry);
-  return ref;
-}
-
-Ref *RefPin(Ref *ref) {
-  GC *gc = REF_GC(ref);
-  gc->pinned = RefListAdd(gc->pinned, ref);
-  return ref;
-}
-
-Ref *RefUnpin(Ref *ref) {
-  GC *gc = REF_GC(ref);
-  gc->pinned = RefListRemove(gc->pinned, ref);
-  return ref;
-}
-
-Ref *RefMark(Ref *ref) {
-  GC *gc = REF_GC(ref);
   return ref;
 }

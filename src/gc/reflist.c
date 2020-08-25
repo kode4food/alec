@@ -4,8 +4,6 @@
 
 #include "reflist.h"
 
-#include <stdlib.h>
-
 typedef struct {
   RefList *prev;
   RefList *curr;

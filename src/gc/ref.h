@@ -5,9 +5,8 @@
 #ifndef ALE_SRC_GC_REF_H_
 #define ALE_SRC_GC_REF_H_
 
-#include <stdint.h>
-
 #include "entry.h"
+#include "typedefs.h"
 
 typedef enum {
   kInitialStatus,
@@ -17,13 +16,17 @@ typedef enum {
   kCollectedStatus,
 } GCStatus_t;
 
-typedef struct {
-  struct GC *gc;
+struct Ref {
+  GC *gc;
   GCStatus_t status;
   Entry *entry;
-} Ref;
+};
 
 #define REF_GC(ref) ((GC *) ((ref)->gc))
 #define DEREF(ref) (&((ref)->entry.data))
+
+Ref *RefPin(Ref *ref);
+Ref *RefUnpin(Ref *ref);
+Ref *RefMark(Ref *ref);
 
 #endif// ALE_SRC_GC_REF_H_

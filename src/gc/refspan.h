@@ -5,20 +5,20 @@
 #ifndef ALE_SRC_GC_REFSPAN_H_
 #define ALE_SRC_GC_REFSPAN_H_
 
-#include "entry.h"
 #include "ref.h"
+#include "typedefs.h"
 
-const GCSize_t kDefaultSpanSize = 1024;
+const Size_t kDefaultSpanSize = 1024;
 
 typedef struct RefSpan RefSpan;
 
 struct RefSpan {
-  GCSize_t count;
-  GCSize_t capacity;
+  Size_t count;
+  Size_t capacity;
   RefSpan *next;
   Ref refs[];
 };
 
-RefSpan *RefSpanAlloc(GCSize_t capacity, RefSpan *next);
+RefSpan *RefSpanAlloc(Size_t capacity, RefSpan *next);
 
 #endif// ALE_SRC_GC_REFSPAN_H_
