@@ -19,13 +19,26 @@ Ref *RefUnpin(Ref *ref) {
 }
 
 Ref *RefMark(Ref *ref) {
+  GC *gc = REF_GC(ref);
+  if (ref->status == kGrey) {
+    return ref;
+  }
   Entry *entry = ref->entry;
   Marker marker = entry->type->marker;
   if (marker) {
-    GC *gc = REF_GC(ref);
-    ref->status = kPendingStatus;
+    ref->status = kGrey;
     marker(gc, entry->data);
   }
-  ref->status = kMarkedStatus;
+  ref->status = gc->black;
   return ref;
+}
+
+void RefFree(Ref *ref) {
+  free(ref->entry);
+  *ref = (Ref){
+      .status = kInit,
+      .entry = NULL,
+  };
+  GC *gc = REF_GC(ref);
+  gc->freed = RefListAdd(gc->freed, ref);
 }
