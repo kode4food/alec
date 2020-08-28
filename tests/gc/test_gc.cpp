@@ -24,7 +24,8 @@ SCENARIO("Garbage collect an atomic value") {
       *i1 = 42;
 
       THEN("It should not be collected") {
-        REQUIRE(GCCollect(gc) == 0);
+        Size_t freed = GCCollect(gc);
+        REQUIRE(freed == 0);
 
         AND_THEN("It should be retained") {
           int *i2 = DEREF(r, int);
@@ -36,7 +37,8 @@ SCENARIO("Garbage collect an atomic value") {
         RefUnpin(r);
 
         THEN("It should be capable of being freed") {
-          REQUIRE(GCCollect(gc) == sizeof(int));
+          Size_t freed = GCCollect(gc);
+          REQUIRE(freed == sizeof(int));
         }
       }
     }
