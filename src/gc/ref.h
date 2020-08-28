@@ -8,11 +8,16 @@
 #include "entry.h"
 #include "typedefs.h"
 
-typedef uint8_t GCStatus_t;
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-const GCStatus_t kInit = 0;
-const GCStatus_t kGrey = 1;
-const GCStatus_t kFlipper = 2;
+typedef enum {
+  kInit,
+  kGrey,
+  kFlipper1,
+  kFlipper2,
+} GCStatus_t;
 
 struct Ref {
   GC *gc;
@@ -21,12 +26,16 @@ struct Ref {
 };
 
 #define REF_GC(ref) ((GC *) ((ref)->gc))
-#define DEREF(ref) (&((ref)->entry.data))
-#define FLIP_STATUS(status) (status == kFlipper ? kFlipper + 1 : kFlipper)
+#define DEREF(ref, type) ((type *)((ref)->entry->data))
+#define FLIP_STATUS(status) (status == kFlipper1 ? kFlipper2 : kFlipper1)
 
 Ref *RefPin(Ref *ref);
 Ref *RefUnpin(Ref *ref);
 Ref *RefMark(Ref *ref);
 void RefFree(Ref *ref);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif// ALE_SRC_GC_REF_H_

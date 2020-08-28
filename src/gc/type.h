@@ -7,6 +7,10 @@
 
 #include "typedefs.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef void (*Marker)(GC* gc, void* ptr);
 typedef void (*Finalizer)(GC* gc, void* ptr);
 
@@ -15,5 +19,9 @@ typedef struct Type {
   Marker marker;
   Finalizer finalizer;
 } Type;
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif//ALE_SRC_GC_TYPE_H_

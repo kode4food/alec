@@ -8,7 +8,9 @@
 #include "ref.h"
 #include "typedefs.h"
 
-const Size_t kDefaultSpanSize = 1024;
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 typedef struct RefSpan RefSpan;
 
@@ -20,5 +22,10 @@ struct RefSpan {
 };
 
 RefSpan *RefSpanAlloc(Size_t capacity, RefSpan *next);
+RefSpan *RefSpanAllocDefault(RefSpan *next);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif// ALE_SRC_GC_REFSPAN_H_

@@ -4,6 +4,8 @@
 
 #include "reflist.h"
 
+const RefList *kEmptyRefList = NULL;
+
 typedef struct {
   RefList *prev;
   RefList *curr;
@@ -15,13 +17,17 @@ static RefListScanResult emptyRefListScanResult = {
 };
 
 static RefListScanResult Scan(RefList *list, Ref *ref) {
-  for (RefList *prev, *curr = list; curr; prev = curr, curr = curr->next) {
+  RefList *prev = NULL;
+  RefList *curr = list;
+  while (curr) {
     if (curr->ref == ref) {
       RefListScanResult result;
       result.prev = prev;
       result.curr = curr;
       return result;
     }
+    prev = curr;
+    curr = curr->next;
   }
   return emptyRefListScanResult;
 }

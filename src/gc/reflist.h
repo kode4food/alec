@@ -7,6 +7,10 @@
 
 #include "ref.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef struct RefList RefList;
 
 struct RefList {
@@ -14,9 +18,11 @@ struct RefList {
   RefList *next;
 };
 
-const RefList *kEmptyRefList = NULL;
-
 RefList *RefListAdd(RefList *list, Ref *ref);
 RefList *RefListRemove(RefList *list, Ref *ref);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif// ALE_SRC_GC_REFLIST_H_

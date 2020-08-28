@@ -31,7 +31,8 @@ static Ref *AllocFreedRef(GC *gc, Entry *entry) {
   // Initial status for a new reference is grey, so that it isn't
   // inadvertantly collected before it's properly wired in place
   *ref = (Ref){
-      .status = kGrey,
+      .gc = gc,
+      .status = gc->white,
       .entry = entry,
   };
   return ref;
@@ -41,7 +42,7 @@ static Ref *AllocSpannedRef(GC *gc, Entry *entry) {
   // Find a span to allocate from
   RefSpan *span = gc->refs;
   if (!span || span->count == span->capacity) {
-    gc->refs = span = RefSpanAlloc(kDefaultSpanSize, span);
+    gc->refs = span = RefSpanAllocDefault(span);
   }
 
   // Allocate from the span
@@ -49,7 +50,7 @@ static Ref *AllocSpannedRef(GC *gc, Entry *entry) {
   Ref *ref = &(span->refs[idx]);
   *ref = (Ref){
       .gc = gc,
-      .status = kGrey,
+      .status = gc->white,
       .entry = entry,
   };
   return ref;

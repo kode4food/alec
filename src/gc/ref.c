@@ -35,10 +35,11 @@ Ref *RefMark(Ref *ref) {
 
 void RefFree(Ref *ref) {
   free(ref->entry);
+  GC *gc = REF_GC(ref);
   *ref = (Ref){
+      .gc = gc,
       .status = kInit,
       .entry = NULL,
   };
-  GC *gc = REF_GC(ref);
   gc->freed = RefListAdd(gc->freed, ref);
 }

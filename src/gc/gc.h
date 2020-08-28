@@ -5,6 +5,10 @@
 #ifndef ALE_SRC_GC_GC_H_
 #define ALE_SRC_GC_GC_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "reflist.h"
 #include "refspan.h"
 #include "type.h"
@@ -22,5 +26,9 @@ GC *GCInit();
 Ref *GCNew(GC *gc, Type *type);
 Ref *GCNewSized(GC *gc, Type *type, Size_t size);
 Size_t GCCollect(GC *gc);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif// ALE_SRC_GC_GC_H_
