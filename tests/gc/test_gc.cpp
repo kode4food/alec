@@ -6,7 +6,7 @@
 #include "gc/type.h"
 
 #define CATCH_CONFIG_MAIN
-#include "catch.h"
+#include "catch.hpp"
 
 SCENARIO("Garbage collect an atomic value") {
   Type int_type = {
