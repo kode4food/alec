@@ -1,9 +1,4 @@
-//
-// Created by Thomas Bradford on 19.08.20.
-//
-
-#ifndef ALE_SRC_GC_REF_H_
-#define ALE_SRC_GC_REF_H_
+#pragma once
 
 #include "entry.h"
 #include "typedefs.h"
@@ -26,8 +21,7 @@ struct Ref {
 };
 
 #define REF_GC(ref) ((GC *) ((ref)->gc))
-#define DEREF(ref, type) ((type *)((ref)->entry->data))
-#define FLIP_STATUS(status) (status == kFlipper1 ? kFlipper2 : kFlipper1)
+#define DEREF(ref, type) ((type *) ((ref)->entry->data))
 
 Ref *RefPin(Ref *ref);
 Ref *RefUnpin(Ref *ref);
@@ -37,5 +31,3 @@ void RefFree(Ref *ref);
 #ifdef __cplusplus
 }
 #endif
-
-#endif// ALE_SRC_GC_REF_H_

@@ -1,9 +1,4 @@
-//
-// Created by Thomas Bradford on 17.08.20.
-//
-
-#ifndef ALE_SRC_GC_GC_H_
-#define ALE_SRC_GC_GC_H_
+#pragma once
 
 #ifdef __cplusplus
 extern "C" {
@@ -30,5 +25,3 @@ Size_t GCCollect(GC *gc);
 #ifdef __cplusplus
 }
 #endif
-
-#endif// ALE_SRC_GC_GC_H_

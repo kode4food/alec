@@ -1,9 +1,4 @@
-//
-// Created by Thomas Bradford on 25.08.20.
-//
-
-#ifndef ALE_SRC_GC_TYPE_H_
-#define ALE_SRC_GC_TYPE_H_
+#pragma once
 
 #include "typedefs.h"
 
@@ -23,5 +18,3 @@ typedef struct Type {
 #ifdef __cplusplus
 }
 #endif
-
-#endif//ALE_SRC_GC_TYPE_H_

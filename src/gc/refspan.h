@@ -1,9 +1,4 @@
-//
-// Created by Thomas Bradford on 19.08.20.
-//
-
-#ifndef ALE_SRC_GC_REFSPAN_H_
-#define ALE_SRC_GC_REFSPAN_H_
+#pragma once
 
 #include "ref.h"
 #include "typedefs.h"
@@ -27,5 +22,3 @@ RefSpan *RefSpanAllocDefault(RefSpan *next);
 #ifdef __cplusplus
 }
 #endif
-
-#endif// ALE_SRC_GC_REFSPAN_H_

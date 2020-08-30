@@ -1,7 +1,3 @@
-//
-// Created by Thomas Bradford on 19.08.20.
-//
-
 #include "ref.h"
 
 #include "gc.h"

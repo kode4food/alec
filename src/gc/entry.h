@@ -1,9 +1,4 @@
-//
-// Created by Thomas Bradford on 20.08.20.
-//
-
-#ifndef ALE_SRC_GC_ENTRY_H_
-#define ALE_SRC_GC_ENTRY_H_
+#pragma once
 
 #ifdef __cplusplus
 extern "C" {
@@ -23,5 +18,3 @@ struct Entry {
 #ifdef __cplusplus
 }
 #endif
-
-#endif//ALE_SRC_GC_ENTRY_H_

@@ -1,9 +1,4 @@
-//
-// Created by Thomas Bradford on 25.08.20.
-//
-
-#ifndef ALE_SRC_GC_TYPEDEFS_H_
-#define ALE_SRC_GC_TYPEDEFS_H_
+#pragma once
 
 #include <stdint.h>
 #include <stdlib.h>
@@ -23,5 +18,3 @@ typedef struct Ref Ref;
 #ifdef __cplusplus
 }
 #endif
-
-#endif//ALE_SRC_GC_TYPEDEFS_H_

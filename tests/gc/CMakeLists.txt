@@ -1,4 +1,4 @@
-set(test_gc_source_files test_gc.cpp)
-add_executable(test_gc ${test_gc_source_files})
-target_link_libraries(test_gc gc runtime)
-add_test(gc test_gc)
+set(tests_gc_source_files main.cpp gc.hpp log.hpp)
+add_executable(tests_gc ${tests_gc_source_files})
+target_link_libraries(tests_gc gc runtime)
+add_test(garbage_collector tests_gc)

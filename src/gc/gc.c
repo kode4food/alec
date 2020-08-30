@@ -1,7 +1,3 @@
-//
-// Created by Thomas Bradford on 17.08.20.
-//
-
 #include "gc.h"
 
 #include <stdio.h>
@@ -14,8 +10,8 @@
 
 GC *GCInit() {
   GC *gc = calloc(1, sizeof(GC));
-  gc->black = kGrey + 1;
-  gc->white = FLIP_STATUS(gc->black);
+  gc->black = kFlipper1;
+  gc->white = kFlipper2;
   return gc;
 }
 
@@ -104,12 +100,11 @@ static Size_t FreeRefs(GC *gc, RefList *white) {
 }
 
 static void FlipStatus(GC *gc) {
-  // When a collection is complete, flip the marking values so we don't
-  // have to reset all the references' status values. At this point,
-  // all the white refs will be gone, and the black refs can reset to
-  // white status
-  gc->black = FLIP_STATUS(gc->black);
-  gc->white = FLIP_STATUS(gc->white);
+  // When a collection is complete, we flip the marking values so we
+  // don't have to reset all the remaining references
+  GCStatus_t hold = gc->black;
+  gc->black = gc->white;
+  gc->white = hold;
 }
 
 Size_t GCCollect(GC *gc) {

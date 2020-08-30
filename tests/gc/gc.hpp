@@ -1,12 +1,7 @@
-//
-// Created by Thomas Bradford on 17.08.20.
-//
-
+#pragma once
+#include "catch.hpp"
 #include "gc/gc.h"
 #include "gc/type.h"
-
-#define CATCH_CONFIG_MAIN
-#include "catch.hpp"
 
 SCENARIO("Garbage collect an atomic value") {
   Type int_type = {

@@ -1,9 +1,4 @@
-//
-// Created by Thomas Bradford on 19.08.20.
-//
-
-#ifndef ALE_SRC_GC_REFLIST_H_
-#define ALE_SRC_GC_REFLIST_H_
+#pragma once
 
 #include "ref.h"
 
@@ -24,5 +19,3 @@ RefList *RefListRemove(RefList *list, Ref *ref);
 #ifdef __cplusplus
 }
 #endif
-
-#endif// ALE_SRC_GC_REFLIST_H_
