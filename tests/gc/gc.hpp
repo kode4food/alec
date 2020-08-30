@@ -1,4 +1,5 @@
 #pragma once
+
 #include "catch.hpp"
 #include "gc/gc.h"
 #include "gc/type.h"
