@@ -39,9 +39,10 @@ RefList *RefListAdd(RefList *list, Ref *ref) {
 
 RefList *RefListRemove(RefList *list, Ref *ref) {
   RefListScanResult result = Scan(list, ref);
-  if (result.curr) {
-    RefList *next = result.curr->next;
-    free(result.curr);
+  RefList *curr = result.curr;
+  if (curr) {
+    RefList *next = curr->next;
+    free(curr);
     if (!result.prev) {
       return next;
     }

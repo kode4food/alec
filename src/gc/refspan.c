@@ -1,5 +1,7 @@
 #include "refspan.h"
 
+#include "ref.h"
+
 const Size_t kDefaultSpanSize = 1024;
 
 RefSpan *RefSpanAlloc(Size_t capacity, RefSpan *next) {
@@ -19,6 +21,12 @@ RefSpan *RefSpanAllocDefault(RefSpan *next) {
 
 void RefSpanDestroy(RefSpan *span) {
   for (RefSpan *curr = span; curr;) {
+    Ref *ref = &(curr->refs[0]);
+    for (int i = 0; i < curr->count; i++, ref++) {
+      if (ref->status != kInit) {
+        free(ref->entry);
+      }
+    }
     RefSpan *next = curr->next;
     free(curr);
     curr = next;

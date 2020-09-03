@@ -53,6 +53,8 @@ dkms.conf
 
 # CMake Stuff
 build
+coverage
+Testing
 
 *~
 .idea
