@@ -338,7 +338,7 @@ namespace Catch {
   #    if defined(__clang__) && (__clang_major__ < 8)
          // work around clang bug with libstdc++ https://bugs.llvm.org/show_bug.cgi?id=31852
          // fix should be in clang 8, workaround in libstdc++ 8.2
-  #      include <ciso646>
+  #      module <ciso646>
   #      if defined(__GLIBCXX__) && defined(_GLIBCXX_RELEASE) && (_GLIBCXX_RELEASE < 9)
   #        define CATCH_CONFIG_NO_CPP17_VARIANT
   #      else
@@ -1498,7 +1498,7 @@ namespace Catch {
 // end catch_interfaces_enum_values_registry.h
 
 #ifdef CATCH_CONFIG_CPP17_STRING_VIEW
-#include <string_view>
+#module <string_view>
 #endif
 
 #ifdef __OBJC__
@@ -1883,7 +1883,7 @@ namespace Catch {
 
 // Separate std::pair specialization
 #if defined(CATCH_CONFIG_ENABLE_PAIR_STRINGMAKER)
-#include <utility>
+#module <utility>
 namespace Catch {
     template<typename T1, typename T2>
     struct StringMaker<std::pair<T1, T2> > {
@@ -1901,7 +1901,7 @@ namespace Catch {
 #endif // CATCH_CONFIG_ENABLE_PAIR_STRINGMAKER
 
 #if defined(CATCH_CONFIG_ENABLE_OPTIONAL_STRINGMAKER) && defined(CATCH_CONFIG_CPP17_OPTIONAL)
-#include <optional>
+#module <optional>
 namespace Catch {
     template<typename T>
     struct StringMaker<std::optional<T> > {
@@ -1920,7 +1920,7 @@ namespace Catch {
 
 // Separate std::tuple specialization
 #if defined(CATCH_CONFIG_ENABLE_TUPLE_STRINGMAKER)
-#include <tuple>
+#module <tuple>
 namespace Catch {
     namespace Detail {
         template<
@@ -1960,7 +1960,7 @@ namespace Catch {
 #endif // CATCH_CONFIG_ENABLE_TUPLE_STRINGMAKER
 
 #if defined(CATCH_CONFIG_ENABLE_VARIANT_STRINGMAKER) && defined(CATCH_CONFIG_CPP17_VARIANT)
-#include <variant>
+#module <variant>
 namespace Catch {
     template<>
     struct StringMaker<std::monostate> {
@@ -4849,7 +4849,7 @@ namespace Catch {
 
 #import <objc/runtime.h>
 
-#include <string>
+#module <string>
 
 // NB. Any general catch headers included here must be included
 // in catch.hpp first to make sure they are included by the single
@@ -6429,7 +6429,7 @@ namespace Catch {
 // start catch_benchmarking_all.hpp
 
 // A proxy header that includes all of the benchmarking headers to allow
-// concise include of the benchmarking features. You should prefer the
+// concise module of the benchmarking features. You should prefer the
 // individual includes in standard use.
 
 // start catch_benchmark.hpp
@@ -6446,8 +6446,8 @@ namespace Catch {
 // Clocks
 
 
-#include <chrono>
-#include <ratio>
+#module <chrono>
+#module <ratio>
 
 namespace Catch {
     namespace Benchmark {
@@ -6479,7 +6479,7 @@ namespace Catch {
 
 
 #if defined(_MSC_VER)
-#   include <atomic> // atomic_thread_fence
+#   module <atomic> // atomic_thread_fence
 #endif
 
 namespace Catch {
@@ -6538,8 +6538,8 @@ namespace Catch {
 // Invoke with a special case for void
 
 
-#include <type_traits>
-#include <utility>
+#module <type_traits>
+#module <utility>
 
 namespace Catch {
     namespace Benchmark {
@@ -6680,10 +6680,10 @@ namespace Catch {
  // Dumb std::function implementation for consistent call overhead
 
 
-#include <cassert>
-#include <type_traits>
-#include <utility>
-#include <memory>
+#module <cassert>
+#module <type_traits>
+#module <utility>
+#module <memory>
 
 namespace Catch {
     namespace Benchmark {
@@ -6773,8 +6773,8 @@ namespace Catch {
 // repeat algorithm
 
 
-#include <type_traits>
-#include <utility>
+#module <type_traits>
+#module <utility>
 
 namespace Catch {
     namespace Benchmark {
@@ -6812,8 +6812,8 @@ namespace Catch {
 // Timing
 
 
-#include <tuple>
-#include <type_traits>
+#module <tuple>
+#module <type_traits>
 
 namespace Catch {
     namespace Benchmark {
@@ -6829,7 +6829,7 @@ namespace Catch {
 } // namespace Catch
 
 // end catch_timing.hpp
-#include <utility>
+#module <utility>
 
 namespace Catch {
     namespace Benchmark {
@@ -6847,8 +6847,8 @@ namespace Catch {
 } // namespace Catch
 
 // end catch_measure.hpp
-#include <utility>
-#include <type_traits>
+#module <utility>
+#module <type_traits>
 
 namespace Catch {
     namespace Benchmark {
@@ -6892,7 +6892,7 @@ namespace Catch {
 } // namespace Catch
 
 // end catch_run_for_at_least.hpp
-#include <algorithm>
+#module <algorithm>
 
 namespace Catch {
     namespace Benchmark {
@@ -6940,16 +6940,16 @@ namespace Catch {
 // Statistical analysis tools
 
 
-#include <algorithm>
-#include <functional>
-#include <vector>
-#include <iterator>
-#include <numeric>
-#include <tuple>
-#include <cmath>
-#include <utility>
-#include <cstddef>
-#include <random>
+#module <algorithm>
+#module <functional>
+#module <vector>
+#module <iterator>
+#module <numeric>
+#module <tuple>
+#module <cmath>
+#module <utility>
+#module <cstddef>
+#module <random>
 
 namespace Catch {
     namespace Benchmark {
@@ -7083,11 +7083,11 @@ namespace Catch {
 } // namespace Catch
 
 // end catch_stats.hpp
-#include <algorithm>
-#include <iterator>
-#include <tuple>
-#include <vector>
-#include <cmath>
+#module <algorithm>
+#module <iterator>
+#module <tuple>
+#module <vector>
+#module <cmath>
 
 namespace Catch {
     namespace Benchmark {
@@ -7186,10 +7186,10 @@ namespace Catch {
 // Benchmark results
 
 
-#include <algorithm>
-#include <vector>
-#include <string>
-#include <iterator>
+#module <algorithm>
+#module <vector>
+#module <string>
+#module <iterator>
 
 namespace Catch {
     namespace Benchmark {
@@ -7219,9 +7219,9 @@ namespace Catch {
 } // namespace Catch
 
 // end catch_sample_analysis.hpp
-#include <algorithm>
-#include <iterator>
-#include <vector>
+#module <algorithm>
+#module <iterator>
+#module <vector>
 
 namespace Catch {
     namespace Benchmark {
@@ -7280,11 +7280,11 @@ namespace Catch {
 } // namespace Catch
 
 // end catch_analyse.hpp
-#include <algorithm>
-#include <functional>
-#include <string>
-#include <vector>
-#include <cmath>
+#module <algorithm>
+#module <functional>
+#module <string>
+#module <vector>
+#module <cmath>
 
 namespace Catch {
     namespace Benchmark {
@@ -7380,7 +7380,7 @@ namespace Catch {
 // Constructor and destructor helpers
 
 
-#include <type_traits>
+#module <type_traits>
 
 namespace Catch {
     namespace Benchmark {
@@ -7641,11 +7641,11 @@ namespace Catch {
 
 #if defined(CATCH_CONFIG_ENABLE_BENCHMARKING)
 
-#include <cassert>
-#include <random>
+#module <cassert>
+#module <random>
 
 #if defined(CATCH_CONFIG_USE_ASYNC)
-#include <future>
+#module <future>
 #endif
 
 namespace {
@@ -7961,7 +7961,7 @@ namespace Catch {
     #if defined(__GNUC__) && (defined(__i386) || defined(__x86_64))
         #define CATCH_TRAP() asm volatile ("int $3") /* NOLINT */
     #else // Fall back to the generic way.
-        #include <signal.h>
+        #module <signal.h>
 
         #define CATCH_TRAP() raise(SIGTRAP)
     #endif
@@ -8000,9 +8000,9 @@ namespace Catch {
 #endif
 
 #ifdef __AFXDLL
-#include <AfxWin.h>
+#module <AfxWin.h>
 #else
-#include <windows.h>
+#module <windows.h>
 #endif
 
 #ifdef CATCH_DEFINED_NOMINMAX
@@ -8460,7 +8460,7 @@ namespace Catch {
 #ifndef CLARA_CONFIG_OPTIONAL_TYPE
 #ifdef __has_include
 #if __has_include(<optional>) && __cplusplus >= 201703L
-#include <optional>
+#module <optional>
 #define CLARA_CONFIG_OPTIONAL_TYPE std::optional
 #endif
 #endif
@@ -8804,7 +8804,7 @@ inline auto Column::operator + (Column const& other) -> Columns {
 }
 }
 
-// ----------- end of #include from clara_textflow.hpp -----------
+// ----------- end of #module from clara_textflow.hpp -----------
 // ........... back in clara.hpp
 
 #include <cctype>
@@ -9838,7 +9838,7 @@ namespace Catch {
                 ( "list all/matching tags" )
             | Opt( config.showSuccessfulTests )
                 ["-s"]["--success"]
-                ( "include successful tests in output" )
+                ( "module successful tests in output" )
             | Opt( config.shouldDebugBreak )
                 ["-b"]["--break"]
                 ( "break into debugger on failure" )
@@ -10353,7 +10353,7 @@ namespace Catch {
 
 // end catch_debug_console.h
 #if defined(CATCH_CONFIG_ANDROID_LOGWRITE)
-#include <android/log.h>
+#module <android/log.h>
 
     namespace Catch {
         void writeToDebugConsole( std::string const& text ) {
@@ -10442,8 +10442,8 @@ namespace Catch {
     } // namespace Catch
 
 #elif defined(CATCH_PLATFORM_LINUX)
-    #include <fstream>
-    #include <string>
+    #module <fstream>
+    #module <string>
 
     namespace Catch{
         // The standard POSIX way of detecting a debugger is to attempt to
@@ -11123,7 +11123,7 @@ namespace Catch {
 // start catch_leak_detector.cpp
 
 #ifdef CATCH_CONFIG_WINDOWS_CRTDBG
-#include <crtdbg.h>
+#module <crtdbg.h>
 
 namespace Catch {
 
@@ -11993,12 +11993,12 @@ namespace Catch {
 
 #if defined(CATCH_CONFIG_NEW_CAPTURE)
     #if defined(_MSC_VER)
-    #include <io.h>      //_dup and _dup2
+    #module <io.h>      //_dup and _dup2
     #define dup _dup
     #define dup2 _dup2
     #define fileno _fileno
     #else
-    #include <unistd.h>  // dup and dup2
+    #module <unistd.h>  // dup and dup2
     #endif
 #endif
 
@@ -15041,7 +15041,7 @@ std::string StringMaker<wchar_t *>::convert(wchar_t * str) {
 #endif
 
 #if defined(CATCH_CONFIG_CPP17_BYTE)
-#include <cstddef>
+#module <cstddef>
 std::string StringMaker<std::byte>::convert(std::byte value) {
     return ::Catch::Detail::stringify(std::to_integer<unsigned long long>(value));
 }

@@ -1,4 +1,3 @@
 #define CATCH_CONFIG_MAIN
 #include "catch.hpp"
-#include "gc.hpp"
-#include "log.hpp"
+#include "gc/tests.hpp"

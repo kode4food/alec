@@ -1,5 +1,5 @@
-set(ale_source_files main.c)
+set(ale_src tests.c)
 add_subdirectory(gc)
 add_subdirectory(runtime)
-add_executable(ale ${ale_source_files})
+add_executable(ale ${ale_src})
 target_link_libraries(ale gc runtime)
