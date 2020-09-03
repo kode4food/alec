@@ -16,3 +16,11 @@ RefSpan *RefSpanAlloc(Size_t capacity, RefSpan *next) {
 RefSpan *RefSpanAllocDefault(RefSpan *next) {
   return RefSpanAlloc(kDefaultSpanSize, next);
 }
+
+void RefSpanDestroy(RefSpan *span) {
+  for (RefSpan *curr = span; curr;) {
+    RefSpan *next = curr->next;
+    free(curr);
+    curr = next;
+  }
+}

@@ -2,6 +2,7 @@
 
 #include "catch.hpp"
 #include "gc/gc.h"
+#include "gc/ref.h"
 #include "gc/type.h"
 
 SCENARIO("Garbage collect an atomic value") {
@@ -38,5 +39,6 @@ SCENARIO("Garbage collect an atomic value") {
         }
       }
     }
+    GCDestroy(gc);
   }
 }

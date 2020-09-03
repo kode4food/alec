@@ -1,6 +1,9 @@
 #include "ref.h"
 
 #include "gc.h"
+#include "reflist.h"
+#include "refspan.h"
+#include "type.h"
 
 Ref *RefPin(Ref *ref) {
   GC *gc = REF_GC(ref);

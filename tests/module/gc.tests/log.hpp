@@ -5,7 +5,7 @@
 #include "gc/ref.h"
 
 void TestConsumer(LogEntry *entry, void *context) {
-  LogEntry *target = (LogEntry *) context;
+  auto *target = (LogEntry *) context;
   *target = *entry;
 }
 
@@ -40,6 +40,6 @@ SCENARIO("Log appends correctly") {
       }
     }
 
-    LogFree(log);
+    LogDestroy(log);
   }
 }

@@ -1,13 +1,12 @@
 #pragma once
 
+#include <stdbool.h>
+
+#include "typedefs.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-#include <stdbool.h>
-
-#include "gc.h"
-#include "ref.h"
 
 typedef enum {
   // Collector Entries
@@ -18,24 +17,24 @@ typedef enum {
   kRefWritten,
 } LogTag_t;
 
-typedef struct LogEntry {
+struct LogEntry {
   LogTag_t tag;
   Ref *target;
   Ref *existing;
   Ref *replaced;
   struct LogEntry *prev;
   struct LogEntry *next;
-} LogEntry;
+};
 
-typedef struct Log {
+struct Log {
   LogEntry *head;
   LogEntry *tail;
-} Log;
+};
 
 typedef void (*LogConsumer)(LogEntry *entry, void *ctx);
 
 Log *LogAlloc();
-void LogFree(Log *log);
+void LogDestroy(Log *log);
 void LogTraced(Log *log, Ref *target, Ref *existing);
 void LogCreated(Log *log, Ref *target);
 void LogRead(Log *log, Ref *target, Ref *existing);

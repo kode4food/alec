@@ -3,6 +3,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "entry.h"
+#include "reflist.h"
+#include "refspan.h"
+#include "type.h"
 #include "typedefs.h"
 
 // Currently stop the world, but the tri-color abstraction is there to
@@ -25,7 +29,7 @@ static Ref *AllocFreedRef(GC *gc, Entry *entry) {
   Ref *ref = freed->ref;
   gc->freed = freed->next;
   // Initial status for a new reference is grey, so that it isn't
-  // inadvertantly collected before it's properly wired in place
+  // inadvertently collected before it's properly wired in place
   *ref = (Ref){
       .gc = gc,
       .status = gc->white,
@@ -89,7 +93,7 @@ static void Finalize(GC *gc, RefList *white) {
   }
 }
 
-static Size_t FreeRefs(GC *gc, RefList *white) {
+static Size_t FreeRefs(__unused GC *gc, RefList *white) {
   Size_t freed = 0;
   for (RefList *curr = white; curr; curr = curr->next) {
     Ref *ref = curr->ref;
@@ -145,4 +149,11 @@ Ref *GCNewSized(GC *gc, Type *type, Size_t size) {
   Entry *entry = AllocEntry(gc, type, size);
   Ref *ref = AllocRef(gc, entry);
   return ref;
+}
+
+void GCDestroy(GC *gc) {
+  RefSpanDestroy(gc->refs);
+  RefListDestroy(gc->freed);
+  RefListDestroy(gc->pinned);
+  free(gc);
 }

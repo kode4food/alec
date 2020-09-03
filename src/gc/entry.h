@@ -1,13 +1,10 @@
 #pragma once
 
+#include "typedefs.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-#include "type.h"
-#include "typedefs.h"
-
-typedef struct Entry Entry;
 
 struct Entry {
   Type* type;

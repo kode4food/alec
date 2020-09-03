@@ -7,8 +7,6 @@
 extern "C" {
 #endif
 
-typedef struct RefSpan RefSpan;
-
 struct RefSpan {
   Size_t count;
   Size_t capacity;
@@ -18,6 +16,7 @@ struct RefSpan {
 
 RefSpan *RefSpanAlloc(Size_t capacity, RefSpan *next);
 RefSpan *RefSpanAllocDefault(RefSpan *next);
+void RefSpanDestroy(RefSpan *span);
 
 #ifdef __cplusplus
 }

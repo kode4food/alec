@@ -1,16 +1,7 @@
 #include "log.h"
 
-Log *LogAlloc(GC *gc) {
+Log *LogAlloc() {
   return calloc(1, sizeof(Log));
-}
-
-void LogFree(Log *log) {
-  for (LogEntry *curr = log->head; curr;) {
-    LogEntry *next = curr->next;
-    free(curr);
-    curr = next;
-  }
-  free(log);
 }
 
 static void LogAppend(Log *log, LogEntry *entry) {
@@ -76,4 +67,13 @@ bool LogConsume(Log *log, LogConsumer consumer, void *context) {
   consumer(head, context);
   free(head);
   return true;
+}
+
+void LogDestroy(Log *log) {
+  for (LogEntry *curr = log->head; curr;) {
+    LogEntry *next = curr->next;
+    free(curr);
+    curr = next;
+  }
+  free(log);
 }

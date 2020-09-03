@@ -6,8 +6,6 @@
 extern "C" {
 #endif
 
-typedef struct RefList RefList;
-
 struct RefList {
   Ref *ref;
   RefList *next;
@@ -15,6 +13,7 @@ struct RefList {
 
 RefList *RefListAdd(RefList *list, Ref *ref);
 RefList *RefListRemove(RefList *list, Ref *ref);
+void RefListDestroy(RefList *list);
 
 #ifdef __cplusplus
 }
