@@ -34,12 +34,12 @@ struct Log {
 typedef void (*LogConsumer)(LogEntry *entry, void *ctx);
 
 Log *LogAlloc();
-void LogDestroy(Log *log);
 void LogTraced(Log *log, Ref *target, Ref *existing);
 void LogCreated(Log *log, Ref *target);
 void LogRead(Log *log, Ref *target, Ref *existing);
 void LogWritten(Log *log, Ref *target, Ref *existing, Ref *replaced);
 bool LogConsume(Log *log, LogConsumer consumer, void *ctx);
+void LogFree(Log *log);
 
 #ifdef __cplusplus
 }

@@ -51,7 +51,7 @@ RefList *RefListRemove(RefList *list, Ref *ref) {
   return list;
 }
 
-void RefListDestroy(RefList *list) {
+void RefListFree(RefList *list) {
   for (RefList *curr = list; curr;) {
     RefList *next = curr->next;
     free(curr);

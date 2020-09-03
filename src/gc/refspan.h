@@ -16,7 +16,7 @@ struct RefSpan {
 
 RefSpan *RefSpanAlloc(Size_t capacity, RefSpan *next);
 RefSpan *RefSpanAllocDefault(RefSpan *next);
-void RefSpanDestroy(RefSpan *span);
+void RefSpanFree(RefSpan *span);
 
 #ifdef __cplusplus
 }

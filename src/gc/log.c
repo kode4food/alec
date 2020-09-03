@@ -69,7 +69,7 @@ bool LogConsume(Log *log, LogConsumer consumer, void *context) {
   return true;
 }
 
-void LogDestroy(Log *log) {
+void LogFree(Log *log) {
   for (LogEntry *curr = log->head; curr;) {
     LogEntry *next = curr->next;
     free(curr);

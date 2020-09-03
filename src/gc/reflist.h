@@ -13,7 +13,7 @@ struct RefList {
 
 RefList *RefListAdd(RefList *list, Ref *ref);
 RefList *RefListRemove(RefList *list, Ref *ref);
-void RefListDestroy(RefList *list);
+void RefListFree(RefList *list);
 
 #ifdef __cplusplus
 }

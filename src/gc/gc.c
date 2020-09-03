@@ -119,6 +119,7 @@ Size_t GCCollect(GC *gc) {
   RefList *white = MakeListOfStatus(gc, gc->white);
   Finalize(gc, white);
   Size_t freed = FreeRefs(gc, white);
+  RefListFree(white);
   FlipStatus(gc);
   return freed;
 }
@@ -152,8 +153,8 @@ Ref *GCNewSized(GC *gc, Type *type, Size_t size) {
 }
 
 void GCDestroy(GC *gc) {
-  RefSpanDestroy(gc->refs);
-  RefListDestroy(gc->freed);
-  RefListDestroy(gc->pinned);
+  RefSpanFree(gc->refs);
+  RefListFree(gc->freed);
+  RefListFree(gc->pinned);
   free(gc);
 }

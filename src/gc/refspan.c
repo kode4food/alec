@@ -19,7 +19,7 @@ RefSpan *RefSpanAllocDefault(RefSpan *next) {
   return RefSpanAlloc(kDefaultSpanSize, next);
 }
 
-void RefSpanDestroy(RefSpan *span) {
+void RefSpanFree(RefSpan *span) {
   for (RefSpan *curr = span; curr;) {
     Ref *ref = &(curr->refs[0]);
     for (int i = 0; i < curr->count; i++, ref++) {
