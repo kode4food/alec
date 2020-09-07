@@ -1,8 +1,15 @@
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+set(project ${PROJECT_SOURCE_DIR})
+set(project_src ${project}/src)
+set(project_extern ${project}/extern)
+
+set(catch_include_dir ${project_extern}/catch)
+include_directories(${catch_include_dir})
+
 set(content "#define CATCH_CONFIG_MAIN" "#include \"catch.hpp\"")
-file(GLOB_RECURSE children ../src ../src/*)
+file(GLOB_RECURSE children ${project_src} ${project_src}/*)
 foreach(child ${children})
     if(child MATCHES "__tests__/[a-zA-Z]+.hpp$")
         get_filename_component(path "${child}" ABSOLUTE)
