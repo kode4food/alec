@@ -3,12 +3,13 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(content "#define CATCH_CONFIG_MAIN" "#include \"catch.hpp\"")
 file(GLOB_RECURSE children ../src ../src/*)
-FOREACH(child ${children})
-    IF(child MATCHES "__tests__/[a-zA-Z]+.hpp$")
+foreach(child ${children})
+    if(child MATCHES "__tests__/[a-zA-Z]+.hpp$")
         get_filename_component(path "${child}" ABSOLUTE)
         list(APPEND content "#include \"${path}\"")
-    ENDIF()
-ENDFOREACH()
+    endif()
+endforeach()
+
 string(REPLACE ";" "\n" content "${content}")
 file(WRITE main_gen.cpp "${content}\n")
 
