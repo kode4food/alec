@@ -11,9 +11,9 @@ foreach(child ${children})
 endforeach()
 
 string(REPLACE ";" "\n" content "${content}")
-file(WRITE main_gen.cpp "${content}\n")
 
-set(test_src main_gen.cpp)
+set(test_src ${CMAKE_CURRENT_BINARY_DIR}/main_gen.cpp)
+file(GENERATE OUTPUT ${test_src} CONTENT "${content}\n")
 add_executable(ale_tests ${test_src})
 target_link_libraries(ale_tests gc runtime)
 add_test(All_Ale_Tests ale_tests)
