@@ -40,6 +40,6 @@ SCENARIO("Log appends correctly") {
       }
     }
 
-    LogFree(log);
+    LogDestroy(log);
   }
 }

@@ -16,7 +16,16 @@ struct RefSpan {
 
 RefSpan *RefSpanAlloc(Size_t capacity, RefSpan *next);
 RefSpan *RefSpanAllocDefault(RefSpan *next);
-void RefSpanFree(RefSpan *span);
+
+/**
+ * Deallocates an entire chain of RefSpans, and frees all of the
+ * entries that their Refs point to. This is a destructive function
+ * that assumes the collector is being shut-down and doesn't care
+ * about whether or not its Refs are being tracked.
+ *
+ * @param span The first RefSpan in the chain
+ */
+void RefSpanDestroy(RefSpan *span);
 
 #ifdef __cplusplus
 }

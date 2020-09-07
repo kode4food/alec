@@ -1,4 +1,4 @@
-set(ale_src main.c)
+set(ale_src runtime.c)
 add_subdirectory(gc)
 add_subdirectory(runtime)
 add_executable(ale ${ale_src})

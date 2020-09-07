@@ -19,14 +19,21 @@ RefSpan *RefSpanAllocDefault(RefSpan *next) {
   return RefSpanAlloc(kDefaultSpanSize, next);
 }
 
-void RefSpanFree(RefSpan *span) {
-  for (RefSpan *curr = span; curr;) {
-    Ref *ref = &(curr->refs[0]);
-    for (int i = 0; i < curr->count; i++, ref++) {
-      if (ref->status != kInit) {
-        free(ref->entry);
-      }
+static void FreeEntries(RefSpan *span) {
+  Ref *ref = &(span->refs[0]);
+  for (int i = 0; i < span->count; i++, ref++) {
+    void *entry = ref->entry;
+    if (ref->status != kInit && entry) {
+      free(entry);
+      ref->entry = NULL;
     }
+  }
+  span->count = 0;
+}
+
+void RefSpanDestroy(RefSpan *span) {
+  for (RefSpan *curr = span; curr;) {
+    FreeEntries(curr);
     RefSpan *next = curr->next;
     free(curr);
     curr = next;

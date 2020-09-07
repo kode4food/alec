@@ -13,7 +13,15 @@ struct RefList {
 
 RefList *RefListAdd(RefList *list, Ref *ref);
 RefList *RefListRemove(RefList *list, Ref *ref);
-void RefListFree(RefList *list);
+
+/**
+ * Deallocates an entire RefList chain, but doesn't touch any of
+ * the Refs or their Entries. Those are managed by RefSpans, and
+ * will be destroyed by calling RefSpanDestroy.
+ *
+ * @param list The first RefList in the chain
+ */
+void RefListDestroy(RefList *list);
 
 #ifdef __cplusplus
 }

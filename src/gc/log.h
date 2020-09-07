@@ -39,7 +39,7 @@ void LogCreated(Log *log, Ref *target);
 void LogRead(Log *log, Ref *target, Ref *existing);
 void LogWritten(Log *log, Ref *target, Ref *existing, Ref *replaced);
 bool LogConsume(Log *log, LogConsumer consumer, void *ctx);
-void LogFree(Log *log);
+void LogDestroy(Log *log);
 
 #ifdef __cplusplus
 }

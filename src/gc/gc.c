@@ -3,7 +3,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "entry.h"
 #include "reflist.h"
 #include "refspan.h"
 #include "type.h"
@@ -119,7 +118,7 @@ Size_t GCCollect(GC *gc) {
   RefList *white = MakeListOfStatus(gc, gc->white);
   Finalize(gc, white);
   Size_t freed = FreeRefs(gc, white);
-  RefListFree(white);
+  RefListDestroy(white);
   FlipStatus(gc);
   return freed;
 }
@@ -153,8 +152,8 @@ Ref *GCNewSized(GC *gc, Type *type, Size_t size) {
 }
 
 void GCDestroy(GC *gc) {
-  RefSpanFree(gc->refs);
-  RefListFree(gc->freed);
-  RefListFree(gc->pinned);
+  RefSpanDestroy(gc->refs);
+  RefListDestroy(gc->freed);
+  RefListDestroy(gc->pinned);
   free(gc);
 }
